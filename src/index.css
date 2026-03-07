@@ -1,0 +1,319 @@
+@import "tailwindcss";
+
+/* ── Custom Theme ── */
+@theme {
+  --color-void: #09090B;
+  --color-abyss: #0F172A;
+  --color-surface: #1E1B2E;
+  --color-surface-light: #2A2640;
+  --color-border: #2E2B3F;
+  --color-border-hover: #8B5CF6;
+  --color-neon-purple: #8B5CF6;
+  --color-neon-purple-light: #A78BFA;
+  --color-neon-cyan: #06B6D4;
+  --color-neon-cyan-light: #22D3EE;
+  --color-text-primary: #F8FAFC;
+  --color-text-secondary: #94A3B8;
+  --color-text-muted: #64748B;
+
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+/* ── Base Styles ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-void);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Glassmorphism Card ── */
+.glass-card {
+  background: rgba(30, 27, 46, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(139, 92, 246, 0.12);
+  border-radius: 16px;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(139, 92, 246, 0.4);
+  box-shadow:
+    0 8px 32px rgba(139, 92, 246, 0.12),
+    0 0 0 1px rgba(139, 92, 246, 0.15);
+}
+
+/* ── Glow Button ── */
+.btn-glow {
+  position: relative;
+  background: linear-gradient(135deg, var(--color-neon-purple), var(--color-neon-cyan));
+  color: white;
+  font-weight: 600;
+  padding: 14px 32px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+.btn-glow::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--color-neon-purple), var(--color-neon-cyan));
+  filter: blur(12px);
+  opacity: 0.5;
+  z-index: -1;
+  transition: opacity 0.3s ease;
+}
+.btn-glow:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(139, 92, 246, 0.4), 0 0 60px rgba(6, 182, 212, 0.2);
+}
+.btn-glow:hover::before {
+  opacity: 0.8;
+}
+
+/* ── Outlined Button ── */
+.btn-outline {
+  position: relative;
+  background: transparent;
+  color: var(--color-text-primary);
+  font-weight: 600;
+  padding: 14px 32px;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+.btn-outline:hover {
+  border-color: var(--color-neon-purple);
+  color: var(--color-neon-purple-light);
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.15);
+}
+
+/* ── Tag / Badge ── */
+.tag {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: rgba(139, 92, 246, 0.12);
+  color: var(--color-neon-purple-light);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  white-space: nowrap;
+}
+
+.tag-cyan {
+  background: rgba(6, 182, 212, 0.12);
+  color: var(--color-neon-cyan-light);
+  border-color: rgba(6, 182, 212, 0.2);
+}
+
+/* ── Section styling ── */
+.section-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  text-align: center;
+}
+
+.section-subtitle {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--color-neon-purple-light);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* ── Section wrapper spacing ── */
+section {
+  position: relative;
+}
+
+/* Prevent content overlap between sections */
+section + section {
+  margin-top: 0;
+}
+
+/* ── Animated gradient orbs ── */
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(30px, -40px) scale(1.05); }
+  50% { transform: translate(-20px, 20px) scale(0.95); }
+  75% { transform: translate(15px, 30px) scale(1.02); }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.7; }
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  animation: float 12s ease-in-out infinite, pulse-soft 6s ease-in-out infinite;
+}
+
+/* ── Level Badges ── */
+.level-badge {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+}
+
+.level-1 {
+  background: rgba(6, 182, 212, 0.15);
+  color: var(--color-neon-cyan-light);
+  border: 1px solid rgba(6, 182, 212, 0.25);
+}
+
+.level-2 {
+  background: rgba(139, 92, 246, 0.15);
+  color: var(--color-neon-purple-light);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+}
+
+.level-3 {
+  background: rgba(250, 204, 21, 0.15);
+  color: #FBBF24;
+  border: 1px solid rgba(250, 204, 21, 0.25);
+}
+
+/* ── Modal & Dropdown Animations ── */
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes dropdown-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-modal-in {
+  animation: modal-in 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-dropdown-in {
+  animation: dropdown-in 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ── Onboarding Animations ── */
+@keyframes onboarding-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes onboarding-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes onboarding-glow {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.8; }
+}
+
+.animate-onboarding-slide-up {
+  animation: onboarding-slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-onboarding-fade-in {
+  animation: onboarding-fade-in 0.5s ease-out both;
+}
+
+.animate-onboarding-glow {
+  animation: onboarding-glow 3s ease-in-out infinite;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-void);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-neon-purple);
+}
+
+/* ── Thin scrollbar variant for panels ── */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 2px;
+}
+
+/* ── Sandpack Overrides ── */
+.sp-layout {
+  background: transparent !important;
+  border: none !important;
+}
+
+.sp-tab-button {
+  font-family: var(--font-mono) !important;
+  font-size: 0.7rem !important;
+}
+
+/* ── React Resizable Panels Overrides ── */
+[data-panel] {
+  min-width: 0 !important;
+  min-height: 0 !important;
+}
+
